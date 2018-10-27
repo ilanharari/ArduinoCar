@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp3
+{
+    public partial class Form1 : Form
+    {
+        class Problem
+        {
+            //private variables
+            private int correctIndex;
+            private string Question;
+            private string[] arr = new string[4];
+
+            //accesor
+            public int getCorrectIndex() { return correctIndex; }
+            //mutator
+            public void setQuestion(string Q) { Question = Q; }
+            public void setAnswers(string[] A) { arr = A; }
+            public void setIndex(int i) { correctIndex = i; }
+            //constructor
+            public Problem(string Q, string[] A, int a_ind)
+            {
+                Question = Q;
+                A = arr;
+                correctIndex = a_ind;
+            }
+            //== operator overload
+            public static bool operator ==(Problem obj, int x)
+            {
+                if (obj.correctIndex == x)
+                    return true;
+                else
+                    return false;
+            }
+            //!= operator overload
+            public static bool operator !=(Problem obj, int x)
+            {
+                if (obj.correctIndex != x)
+                    return true;
+                else
+                    return false;
+            }
+
+        }
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //IDEA: have a 2x2 array with q's and CORRECT answers, and then compare string 
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //increment the arrays for quentions and answers (array[i + 1] 
+            //change the literal text in each q/a text box
+        }
+    }
+}
