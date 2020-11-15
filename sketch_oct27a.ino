@@ -1,18 +1,13 @@
 //LED defined for starting the game!
-const int LED_PIN = 11;
+#define LED_PIN = 11;
 
 //define output pin for our car
-const int THROTTLE_PIN = 9;
+#define THROTTLE_PIN = 9;
 
 //values for throttle
-const int maxForward = 190;
-const int zeroThrottle = 100;
-const int maxReverse = 77;
-
-//read from serial port
-byte input;
-
-bool serialState = 1;
+#define maxForward = 190;
+#define zeroThrottle = 100;
+#define maxReverse = 77;
 
 void setup() 
 {
@@ -23,42 +18,40 @@ void setup()
   //turn LED off untill game starts
   digitalWrite(LED_PIN, LOW);
   
-  //This will give us a few seconds before the setup starts
+  //This will give us a 10 seconds before the setup starts
   analogWrite(THROTTLE_PIN, zeroThrottle);
   delay(10000);
 
   //Game starts, turn on LED
   digitalWrite(LED_PIN, HIGH);
   
-  //initialize serial mointor(optional)
+  //Initialize serial mointor
   Serial.begin(9600);
 }
 
 //this is like a while(true) loop
-void loop()
-{
+void loop(){
+  char input;
   //Read the serial port
-  if(Serial.available())
-  {
+  if(Serial.available()){
     input = Serial.read();
   }
-  //Move backwards at constant speed if the answer is wrong, 70 == F in ascii
-  if(input == 70)
-  {
+  //Move backwards at constant speed if the answer is wrong
+  if(input == 'F'){
     analogWrite(THROTTLE_PIN, maxReverse); 
     Serial.println('F');
     serialState = 1;
-  //Move forward for one second if user gets answer right, 84 == T in ascii
-  }else if(input == 84 && serialState)
-  {
+  }
+  //Move forward for one second if user gets answer right
+  else if(input == 'T' && serialState){
     analogWrite(THROTTLE_PIN, maxForward);
     Serial.println('T');
     delay(1000);
     analogWrite(THROTTLE_PIN, maxReverse);
     serialState = 0;
-  //Stop the car when game is done, 83 == S in ascii
-  }else if(input == 83)
-  {
+  }
+  //Stop the car when game is done
+  else{// if(input == 'S')
     analogWrite(THROTTLE_PIN, zeroThrottle);
     Serial.println('S');
   }    
